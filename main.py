@@ -14,4 +14,5 @@ driver.get("https://netid.rutgers.edu/adminAuthenticate.htm")
 this will not work -- it does not open a new window/tab,
 it just changes the website of current window
 """
+driver.switch_to.new_window('tab')
 driver.get("https://registry.rutgers.edu/viewCompletePerson.htm")
