@@ -9,10 +9,8 @@ options.add_experimental_option("detach", True)
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
+#opens window, navigated to NetID Admin
 driver.get("https://netid.rutgers.edu/adminAuthenticate.htm")
-"""
-this will not work -- it does not open a new window/tab,
-it just changes the website of current window
-"""
+# switches to new tab, navigates to OR
 driver.switch_to.new_window('tab')
 driver.get("https://registry.rutgers.edu/viewCompletePerson.htm")
