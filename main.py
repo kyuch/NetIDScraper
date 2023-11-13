@@ -94,6 +94,31 @@ def get_netid_mgmt_info(id):
     # print statement
     print(return_string)
 
+
+def get_or_info(id):
+    # switch to netid mgmt tab
+    driver.switch_to.window(reg)
+    
+    # waits for netID input box to be visible to enter into netID box
+    while len(driver.find_elements("c1_ident", 'NETID')) < 1:
+        continue
+
+    # HTML input id is netID for box
+    netID_box_2 = driver.find_element("c1_ident", 'NETID')
+    
+    # input netid argument, press enter. results should load
+    netID_box_2.send_keys(id + Keys.ENTER)
+    
+    # get table
+    table_val = driver.find_element("id", 'find_person_results_table')
+
+    # print table (for now - test with enumerate function)
+    for elements in enumerate(table_val):
+        print(elements)
+    
+
+
 if __name__ == '__main__':
 
     get_netid_mgmt_info(net_id)
+    get_or_info(net_id)
