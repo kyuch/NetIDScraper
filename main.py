@@ -26,51 +26,69 @@ reg = driver.current_window_handle
 def get_netid_mgmt_info(id):
     # switch to netid mgmt tab
     driver.switch_to.window(mgmt)
+    
     # waits for netID input box to be visible
     while len(driver.find_elements("id", 'netID')) < 1:
         continue
 
     # HTML input id is netID for box
     netID_box = driver.find_element("id", 'netID')
+    
     # input netid argument, press enter. results should load
     netID_box.send_keys(id + Keys.ENTER)
+    
     # make sure that LDAP Attributes are visible
     while len(driver.find_elements("id", 'row-netID')) < 1:
         continue
+    
     # collect data
     return_string = "LDAP Attributes\n"
-    return_string = return_string + driver.find_element("id", 'row-netID').text + "\n"
-    return_string = return_string + driver.find_element("id", 'row-RcpID').text + "\n"
-    return_string = return_string + driver.find_element("id", 'row-firstName').text + "\n"
-    return_string = return_string + driver.find_element("id", 'row-lastName').text + "\n"
-    return_string = return_string + driver.find_element("id", 'row-netidStatus').text + "\n"
-    return_string = return_string + driver.find_element("id", 'row-passwordChangeDate').text + "\n"
-    return_string = return_string + driver.find_element("id", 'lockAttr').text + "\n"
-    return_string = return_string + driver.find_element("id", 'campusServiceAttr').text + "\n"
-    return_string = return_string + driver.find_element("id", 'sorSource').text + "\n"
-    return_string = return_string + driver.find_element("id", 'phi').text + "\n"
-    return_string = return_string + driver.find_element("id", 'enrolled').text + "\n"
-    return_string = return_string + driver.find_element("id", 'optedIn').text + "\n"
+    first_elements = ['row-netID', 'row-RcpID', 'row-firstName', 'row-lastName', 'row-netidStatus',
+                'row-passwordChangeDate', 'lockAttr', 'campusServiceAttr', 'sorSource', 'phi' , 'enrolled',
+                'optedIn']
+    
+    for element in first_elements:
+        return_string += return_string + driver.find_element("id", element).text + "\n"
+    
+    # adding additional optedIn Value
     return_string = return_string + driver.find_elements("id", 'optedIn')[1].text + "\n\n"
+
+    # CAS values
     return_string = return_string + "CAS Interrupt Service(CIS) Campaigns\n"
     return_string = return_string + driver.find_element("id", 'campaigns').text + "\n\n"
+
+    # RAD Admin
+    rad_admin_elements = ['radAdminLdap', 'radAdminRad']
     return_string = return_string + "RAD Admin Attributes\n"
-    return_string = return_string + driver.find_element("id", 'radAdminLdap').text + "\n"
-    return_string = return_string + driver.find_element("id", 'radAdminRad').text + "\n"
+
+    for x in rad_admin_elements:
+        return_string += return_string + driver.find_element("id", x).text + "\n"
+    
+    # Adding additional radAdmin Value
     return_string = return_string + driver.find_element("id", 'radAdminLdap').text + "\n\n"
+
+    # NetID elements
     return_string = return_string + "NetID Application Related data\n"
     return_string = return_string + driver.find_element("id", 'row-activationDate').text + "\n"
     return_string = return_string + driver.find_element("id", 'row-passwordChangeDate').text + "\n"
     return_string = return_string + driver.find_element("id", 'row-termsOfUse').text + "\n\n"
+
+    # Security Q&A
     return_string = return_string + "Security Questions and Answers\n"
-    return_string = return_string + driver.find_element("id", 'row-netidHolder').text + "\n"
-    return_string = return_string + driver.find_element("id", 'row-netidHolderEnrollment').text + "\n"
-    return_string = return_string + driver.find_element("id", 'row-netidHolderOptIn').text + "\n"
-    return_string = return_string + driver.find_element("id", 'row-netidHolderLocked').text + "\n"
+    security_elements = ['row-netidHolder', 'row-netidHolderEnrollment', 'row-netidHolderOptIn',
+                         'row-netidHolderLocked']
+    
+    for e in security_elements:
+        return_string += return_string + driver.find_element("id", e).text + "\n"
+
     return_string = return_string + driver.find_element("id", 'row-netidLockoutDate').text + "\n\n"
+
+    # Kerberos Status
     return_string = return_string + "Kerberos Status\n"
     return_string = return_string + driver.find_elements("id", 'row-netidLockoutDate')[1].text + "\n"
     return_string = return_string + driver.find_element("id", 'kerberos').text + "\n"
+
+
     # print statement here as test
     print(return_string)
     return return_string
@@ -78,7 +96,3 @@ def get_netid_mgmt_info(id):
 if __name__ == '__main__':
 
     get_netid_mgmt_info("agk83")
-
-
-
-
