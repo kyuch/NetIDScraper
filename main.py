@@ -26,14 +26,53 @@ driver.switch_to.window(mgmt)
 # put the part below in a function or something so user can call multiple times
 def get_netid_mgmt_info(id):
     # waits for netID input box to be visible
-    while(len(driver.find_elements("id", 'netID')) < 1):
+    while len(driver.find_elements("id", 'netID')) < 1:
         continue
 
     # HTML input id is netID for box
     netID_box = driver.find_element("id", 'netID')
     # input netid argument, press enter. results should load
     netID_box.send_keys(id + Keys.ENTER)
-
+    # make sure that LDAP Attributes are visible
+    while len(driver.find_elements("id", 'row-netID')) < 1:
+        continue
+    # collect data
+    return_string = "LDAP Attributes\n"
+    return_string = return_string + driver.find_element("id", 'row-netID').text + "\n"
+    return_string = return_string + driver.find_element("id", 'row-RcpID').text + "\n"
+    return_string = return_string + driver.find_element("id", 'row-firstName').text + "\n"
+    return_string = return_string + driver.find_element("id", 'row-lastName').text + "\n"
+    return_string = return_string + driver.find_element("id", 'row-netidStatus').text + "\n"
+    return_string = return_string + driver.find_element("id", 'row-passwordChangeDate').text + "\n"
+    return_string = return_string + driver.find_element("id", 'lockAttr').text + "\n"
+    return_string = return_string + driver.find_element("id", 'campusServiceAttr').text + "\n"
+    return_string = return_string + driver.find_element("id", 'sorSource').text + "\n"
+    return_string = return_string + driver.find_element("id", 'phi').text + "\n"
+    return_string = return_string + driver.find_element("id", 'enrolled').text + "\n"
+    return_string = return_string + driver.find_element("id", 'optedIn').text + "\n"
+    return_string = return_string + driver.find_elements("id", 'optedIn')[1].text + "\n\n"
+    return_string = return_string + "CAS Interrupt Service(CIS) Campaigns\n"
+    return_string = return_string + driver.find_element("id", 'campaigns').text + "\n\n"
+    return_string = return_string + "RAD Admin Attributes\n"
+    return_string = return_string + driver.find_element("id", 'radAdminLdap').text + "\n"
+    return_string = return_string + driver.find_element("id", 'radAdminRad').text + "\n"
+    return_string = return_string + driver.find_element("id", 'radAdminLdap').text + "\n\n"
+    return_string = return_string + "NetID Application Related data\n"
+    return_string = return_string + driver.find_element("id", 'row-activationDate').text + "\n"
+    return_string = return_string + driver.find_element("id", 'row-passwordChangeDate').text + "\n"
+    return_string = return_string + driver.find_element("id", 'row-termsOfUse').text + "\n\n"
+    return_string = return_string + "Security Questions and Answers\n"
+    return_string = return_string + driver.find_element("id", 'row-netidHolder').text + "\n"
+    return_string = return_string + driver.find_element("id", 'row-netidHolderEnrollment').text + "\n"
+    return_string = return_string + driver.find_element("id", 'row-netidHolderOptIn').text + "\n"
+    return_string = return_string + driver.find_element("id", 'row-netidHolderLocked').text + "\n"
+    return_string = return_string + driver.find_element("id", 'row-netidLockoutDate').text + "\n\n"
+    return_string = return_string + "Kerberos Status\n"
+    return_string = return_string + driver.find_elements("id", 'row-netidLockoutDate')[1].text + "\n"
+    return_string = return_string + driver.find_element("id", 'kerberos').text + "\n"
+    # print statement here as test
+    print(return_string)
+    return return_string
 
 if __name__ == '__main__':
 
