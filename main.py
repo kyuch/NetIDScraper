@@ -100,11 +100,11 @@ def get_or_info(id):
     driver.switch_to.window(reg)
     
     # waits for netID input box to be visible to enter into netID box
-    while len(driver.find_elements("c1_ident", 'NETID')) < 1:
+    while len(driver.find_elements("id", 'c1_ident')) < 1:
         continue
 
     # HTML input id is netID for box
-    netID_box_2 = driver.find_element("c1_ident", 'NETID')
+    netID_box_2 = driver.find_element("id", 'c1_ident')
     
     # input netid argument, press enter. results should load
     netID_box_2.send_keys(id + Keys.ENTER)
