@@ -90,9 +90,8 @@ def get_netid_mgmt_info(id):
     return_string = return_string + driver.find_elements("id", 'row-netidLockoutDate')[1].text + "\n"
     return_string = return_string + driver.find_element("id", 'kerberos').text + "\n"
 
-
-    # print statement
-    print(return_string)
+    # return statement
+    return return_string
 
 
 def get_or_info(id):
@@ -103,7 +102,7 @@ def get_or_info(id):
     while len(driver.find_elements("id", 'c1_ident')) < 1:
         continue
 
-    # HTML input id is netID for box
+    # HTML input id is c1_ident for box
     netID_box_2 = driver.find_element("id", 'c1_ident')
     
     # input netid argument, press enter. results should load
@@ -112,17 +111,22 @@ def get_or_info(id):
     # get table
     table_val = driver.find_element("id", 'find_person_results_table').text
 
-    # convert table to string checking for "Roles"
-    substring = table_val.split("Roles", 1)[-1].strip()
+    # convert table to iterable list
+    table_list = table_val.split()
 
-    print(substring)
+    # splits table into 2 parts -- before the birthdate and after the birthdate. info after birthdate is roles.
+    split_table = []
+    for word in table_list:
+        if word.count("/") == 2:
+            split_table = table_val.split(word)
+            break
 
-    # split("Roles", 1) splits the string at the first occurrence of "Roles" and returns a list of two parts.
-    # [-1] selects the second part of the list, which starts from "Roles" onwards.
-    # strip() is used to remove any leading or trailing whitespace.
+    role_string = split_table[1]
+    return role_string
+
     
 
 
 if __name__ == '__main__':
-    get_netid_mgmt_info(net_id)
-    get_or_info(net_id)
+    print(get_netid_mgmt_info(net_id))
+    print(get_or_info(net_id))
