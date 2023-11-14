@@ -110,15 +110,19 @@ def get_or_info(id):
     netID_box_2.send_keys(id + Keys.ENTER)
     
     # get table
-    table_val = driver.find_element("id", 'find_person_results_table')
+    table_val = driver.find_element("id", 'find_person_results_table').text
 
-    # print table (for now - test with enumerate function)
-    for elements in enumerate(table_val):
-        print(elements)
+    # convert table to string checking for "Roles"
+    substring = table_val.split("Roles", 1)[-1].strip()
+
+    print(substring)
+
+    # split("Roles", 1) splits the string at the first occurrence of "Roles" and returns a list of two parts.
+    # [-1] selects the second part of the list, which starts from "Roles" onwards.
+    # strip() is used to remove any leading or trailing whitespace.
     
 
 
 if __name__ == '__main__':
-
     get_netid_mgmt_info(net_id)
     get_or_info(net_id)
