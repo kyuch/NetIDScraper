@@ -125,11 +125,35 @@ def get_or_info(id):
             break
 
     role_string = split_table[1]
-    return role_string
+    role_array = role_string.split('\n')
+    # print("role array below")
+    # print(role_array)
+
+    for index, role in enumerate(role_array):
+        if role.split("-")[len(role.split("-")) - 1].count("/") != 2:
+            role_array[index] = "Role (Active) " + role
+        else:
+            role_array[index] = "Role (Inactive) " + role
+
+    return_string = "\n".join(role_array)
+    return return_string
 
     
+def format_string(id):
+    mgmt_string = get_netid_mgmt_info(id)
+    or_string = get_or_info(id)
+    return_string = ""
+
+    if mgmt_string.count("PHI: N") == 1:
+        return_string += "PHI: N\n"
+    else:
+        return_string += "PHI: Y\n"
+
+    return_string += or_string + "\n\n"
+    return_string += mgmt_string
+
+    return return_string
 
 
 if __name__ == '__main__':
-    print(get_netid_mgmt_info(net_id))
-    print(get_or_info(net_id))
+    print(format_string(net_id))
