@@ -91,6 +91,9 @@ def get_netid_mgmt_info(id):
     return_string = return_string + driver.find_element("id", 'kerberos').text + "\n"
 
     # return statement
+    if 'User record is not in LDAP' in return_string:
+        return('NetID does not exist.')
+        
     return return_string
 
 
