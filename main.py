@@ -4,10 +4,6 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
 
-# Ask for NetID Value
-net_id = input("Enter NetID Value: ")
-net_id = net_id.lower()
-
 
 options = Options()
 # leaves browser open after task completed
@@ -156,4 +152,15 @@ def format_string(id):
 
 
 if __name__ == '__main__':
-    print(format_string(net_id))
+
+    # Ask for NetID Value
+
+    net_id = ""
+
+    while True:
+        print("Enter NetID Value: (q to quit)")
+        net_id = input()
+        net_id = net_id.lower()
+        if net_id == 'q' or 'Q':
+            break
+        print(format_string(net_id))
